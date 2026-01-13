@@ -3,15 +3,38 @@
 import styles from "../../styles/page.module.css";
 import { useRouter } from "next/navigation";
 import { useOrder } from "@/contexts/OrderContext";
+import axios from 'axios';
 
 export default function OrderPage() {
   const { createOrder, isOrder } = useOrder();
   const router = useRouter();
 
-  const order = async() => {
-    await createOrder();
-    router.push("/order/orderResult");
-  }
+  const order = async () => {
+    try {
+      // 1. 버튼 비활성화 (Context 내부 로직)
+      await createOrder();
+
+      // 2. Express 서버 호출 (실제 상품 계산해서 적용할 필요)
+      // 결제 시의 Success/Error 처리 기준을 어떻게 할지?
+      const response = await axios.post('http://localhost:3001/api/pay',
+        {
+          items: [
+            { productId: 1, quantity: 1 },
+            { productId: 2, quantity: 1 }
+          ],
+          totalPrice: 3934000
+        }
+      );
+
+      // 3. 성공 시 페이지 이동
+      if (response.data.success) {
+        router.push(`/order/orderResult?orderId=${response.data.orderId}`);
+      }
+    } catch (error) {
+      console.error('주문 실패:', error);
+      alert('결제 중 오류가 발생했습니다.');
+    }
+  };
 
   return (
     <div className={styles.reserveContainer}>
