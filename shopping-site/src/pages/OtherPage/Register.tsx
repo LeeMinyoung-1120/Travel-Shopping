@@ -1,88 +1,101 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import styles from '../../styles/Register.module.css';
 
 const Register: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
+    const router = useRouter();
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+    });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert('비밀번호가 일치하지 않습니다.');
-      return;
-    }
-    console.log('회원가입 데이터:', formData);
-    // 여기서 백엔드 API 호출 추가 가능
-  };
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (formData.password !== formData.confirmPassword) {
+        alert('비밀번호가 일치하지 않습니다.');
+        return;
+        }
+        console.log('회원가입 데이터:', formData);
+    };
 
-  return (
-    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}>
-      <h2>회원가입</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">이름:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder='이름을 입력하세요.'
-            value={formData.name}
-            onChange={handleChange}
-            required
-            style={{border:'1px solid #ccc', backgroundColor:'#eeeeee'}}
-          />
+    return (
+        <div className={styles.container}>
+        <div className={styles.card}>
+            <h2 className={styles.title}>Register</h2>
+
+            <form onSubmit={handleSubmit}>
+            <div className={styles.formGroup}>
+                <label className={styles.label}>Name</label>
+                <input
+                className={styles.input}
+                type="text"
+                name="name"
+                placeholder="이름을 입력하세요"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                />
+            </div>
+
+            <div className={styles.formGroup}>
+                <label className={styles.label}>E-mail</label>
+                <input
+                className={styles.input}
+                type="email"
+                name="email"
+                placeholder="이메일을 입력하세요"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                />
+            </div>
+
+            <div className={styles.formGroup}>
+                <label className={styles.label}>Password</label>
+                <input
+                className={styles.input}
+                type="password"
+                name="password"
+                placeholder="비밀번호를 입력하세요"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                />
+            </div>
+
+            <div className={styles.formGroup}>
+                <label className={styles.label}>verify password</label>
+                <input
+                className={styles.input}
+                type="password"
+                name="confirmPassword"
+                placeholder="비밀번호를 다시 입력하세요"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+                />
+            </div>
+
+            <button className={styles.submitButton} type="submit">
+                회원가입
+            </button>
+            <button
+            className={styles.loginButton}
+            onClick={() => router.push('/OtherPage/Login')}
+            >
+            로그인하기
+            </button>
+            </form>
         </div>
-        <div>
-          <label htmlFor="email">이메일:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder='이메일을 입력하세요.'
-            value={formData.email}
-            onChange={handleChange}
-            required
-            style={{border:'1px solid #ccc', backgroundColor:'#eeeeee'}}
-          />
         </div>
-        <div>
-          <label htmlFor="password">비밀번호:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder='비밀번호를 입력하세요.'
-            value={formData.password}
-            onChange={handleChange}
-            required
-            style={{border:'1px solid #ccc', backgroundColor:'#eeeeee'}}
-          />
-        </div>
-        <div>
-          <label htmlFor="confirmPassword">비밀번호 확인:</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            placeholder='비밀번호를 다시 입력하세요.'
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-            style={{border:'1px solid #ccc', backgroundColor:'#eeeeee'}}
-          />
-        </div>
-        <button type="submit" style={{border:'none',backgroundColor:'green', color:'white', padding: '10px 20px'}}>회원가입</button>
-      </form>
-    </div>
-  );
+    );
 };
 
 export default Register;

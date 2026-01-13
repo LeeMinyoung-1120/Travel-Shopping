@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import styles from '../../styles/Login.module.css';
 
 const Login: React.FC = () => {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -14,43 +18,57 @@ const Login: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('로그인 데이터:', formData);
-    // 여기서 백엔드 API 호출 추가 가능
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}>
-      <h2>Logo</h2>
-      <p>쉽고 간편하게! 진짜 나만의 맞춤 여행을 떠나보세요.</p>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder='이메일을 입력하세요.'
-            value={formData.email}
-            onChange={handleChange}
-            required
-            style={{border:'1px solid #ccc', backgroundColor:'#eeeeee'}}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder='비밀번호를 입력하세요.'
-            value={formData.password}
-            onChange={handleChange}
-            required
-            style={{border:'1px solid #ccc', backgroundColor:'#eeeeee'}}
-          />
-        </div>
-        <button type="submit" style={{border:'none',backgroundColor:'green', color:'white', padding: '10px 20px'}}>로그인</button>
-        <button type="button" style={{border:'1px solid #ccc',backgroundColor:'transparent', padding: '10px 20px'}}>회원가입</button>
-      </form>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <div className={styles.logo}>Logo</div>
+        <p className={styles.description}>
+          쉽고 간편하게!<br />
+          진짜 나만의 맞춤 여행을 떠나보세요.
+        </p>
+
+        <form onSubmit={handleSubmit}>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Email</label>
+            <input
+              className={styles.input}
+              type="email"
+              name="email"
+              placeholder="이메일을 입력하세요"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Password</label>
+            <input
+              className={styles.input}
+              type="password"
+              name="password"
+              placeholder="비밀번호를 입력하세요"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <button className={styles.loginButton} type="submit">
+            로그인
+          </button>
+
+          <button
+            type="button"
+            className={styles.registerButton}
+            onClick={() => router.push('/OtherPage/Register')}
+          >
+            회원가입
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
