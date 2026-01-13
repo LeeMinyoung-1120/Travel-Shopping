@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../../styles/Login.module.css';
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+}
+
 const Login: React.FC = () => {
   const router = useRouter();
 
@@ -17,7 +24,34 @@ const Login: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('로그인 데이터:', formData);
+
+    const users: User[] = JSON.parse(
+      localStorage.getItem('users') || '[]'
+    );
+
+    const user = users.find(
+      (u) =>
+        u.email === formData.email &&
+        u.password === formData.password
+    );
+
+    if (!user) {
+      alert('이메일 또는 비밀번호가 올바르지 않습니다.');
+      return;
+    }
+
+    // server 대신 localStorage에 로그인 성공 정보 저장
+    localStorage.setItem(
+      'loginUser',
+      JSON.stringify({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      })
+    );
+
+    alert(`${user.name}님 환영합니다.`);
+    router.push('/ProductPage/ProductList');
   };
 
   return (
@@ -25,7 +59,8 @@ const Login: React.FC = () => {
       <div className={styles.card}>
         <div className={styles.logo}>Logo</div>
         <p className={styles.description}>
-          쉽고 간편하게!<br />
+          쉽고 간편하게!
+          <br />
           진짜 나만의 맞춤 여행을 떠나보세요.
         </p>
 
