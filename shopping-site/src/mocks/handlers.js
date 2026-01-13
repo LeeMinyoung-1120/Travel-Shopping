@@ -1,16 +1,16 @@
-const { rest } = require('msw');
+import { rest } from 'msw';
 
-const handlers = [
+export const handlers = [
     rest.get('http://localhost:5000/products', (req, res, ctx) => {
         return res(
             ctx.json([
                 {
-                    'name': 'America',
-                    'imagePath': '/images/america.jpeg'
+                    'name':'America',
+                    'imagePath': '/images/america.jpg'
                 },
                 {
-                    'name': 'England',
-                    'imagePath': '/images/england.jpeg'
+                    'name':'England',
+                    'imagePath': '/images/england.jpg'                    
                 }
             ])
         )
@@ -19,14 +19,12 @@ const handlers = [
         return res(
             ctx.json([
                 {
-                    name: 'Insurance',
+                    'name': 'Insurance'
                 },
                 {
-                    name: 'Dinner',
+                    'name': 'Dinner'
                 }
             ])
         )
     })
-];
-
-module.exports = { handlers };
+]
