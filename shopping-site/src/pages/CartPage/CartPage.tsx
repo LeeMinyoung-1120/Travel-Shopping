@@ -29,8 +29,8 @@ const CartPage: React.FC = () => {
               </div>
             </div>
           ))}
-          
-          <div style={{ border: '1px solid #ccc', paddingTop: '20px', marginTop: '20px' }}>
+
+          <div style={{ border: '1px solid #ccc', paddingTop: '20px', marginTop: '20px' ,padding: '10px', margin: '10px 0',}}>
             <h3>결제 정보</h3>
             <h4 style={{borderTop: '1px solid #ccc'}}>주문 금액</h4>
             {items.map(item => (
@@ -39,7 +39,7 @@ const CartPage: React.FC = () => {
                 <span>{(item.price * item.quantity).toLocaleString()}원</span>
               </div>
             ))}
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', marginTop: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', marginTop: '10px'}}>
               <span>총 결제 금액:</span>
               <span>{total.toLocaleString()}원</span>
             </div>
