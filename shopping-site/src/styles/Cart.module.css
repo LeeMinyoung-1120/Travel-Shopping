@@ -17,7 +17,7 @@
   align-items: flex-start;
 }
 
-/* 왼쪽 상품 목록 */
+/* Left side, Product List */
 .productList {
   display: flex;
   flex-direction: column;
@@ -87,7 +87,7 @@
   cursor: pointer;
 }
 
-/* 오른쪽 결제 영역 */
+/* Right side, Pay*/
 .paymentBox {
   background-color: #ffffff;
   border: 1px solid #e5e7eb;
