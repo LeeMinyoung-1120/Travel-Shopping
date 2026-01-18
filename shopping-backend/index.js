@@ -20,7 +20,8 @@ app.listen(PORT, () => {
 });
 
 // Post Method 만들기 (return 값)
-app.post('/api/pay', (req, res) => {
+app.post('/api/order', (req, res) => {
   console.log(req.body);
   res.json({ success: true });
 });
+
