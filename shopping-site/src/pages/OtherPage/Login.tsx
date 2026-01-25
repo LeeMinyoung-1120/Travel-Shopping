@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import styles from '../../styles/Login.module.css';
 
 const Login: React.FC = () => {
@@ -50,7 +52,7 @@ const Login: React.FC = () => {
       );
 
       alert(`${data.user.name}님 환영합니다.`);
-      router.push('/ProductPage/ProductList');
+      router.push('/');
     } catch (error) {
       alert('서버와 연결할 수 없습니다.');
       console.error('Login error:', error);
@@ -101,7 +103,7 @@ const Login: React.FC = () => {
           <button
             type="button"
             className={styles.registerButton}
-            onClick={() => router.push('/OtherPage/Register')}
+            onClick={() => router.push('/register')}
           >
             회원가입
           </button>

@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import styles from '../../styles/Register.module.css';
 
 const Register: React.FC = () => {
@@ -59,7 +61,7 @@ const Register: React.FC = () => {
     localStorage.setItem('users', JSON.stringify(users));
 
     alert('회원가입이 완료되었습니다.');
-    router.push('/OtherPage/Login');
+    router.push('/login');
   };
 
   return (
@@ -127,7 +129,7 @@ const Register: React.FC = () => {
           <button
             type="button"
             className={styles.loginButton}
-            onClick={() => router.push('/OtherPage/Login')}
+            onClick={() => router.push('/login')}
           >
             로그인하기
           </button>
