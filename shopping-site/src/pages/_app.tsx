@@ -1,4 +1,3 @@
-import '../app/globals.css';
 import { CartProvider } from '../contexts/CartContext';
 
 function MyApp({ Component, pageProps }) {
