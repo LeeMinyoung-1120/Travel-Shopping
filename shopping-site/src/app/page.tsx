@@ -1,14 +1,11 @@
-"use client";
+import Link from 'next/link';
 
-import OrderPage from "@/app/order/page"; // OrderPage 컴포넌트 직접 import (test용도)
-
-export default function HomePage() {
+export default function Home() {
   return (
-    <main className="container">
-      <h1 className="title">헤더 위치</h1>
-      <div style={{ marginTop: "2rem" }}>
-        <OrderPage />
-      </div>
-    </main>
+    <div className="max-w-7xl mx-auto px-4 py-10">
+      <h1 className="text-2xl font-bold mb-6">Travel Pick</h1>
+
+      <Link href="/cart">장바구니로 이동</Link>
+    </div>
   );
 }

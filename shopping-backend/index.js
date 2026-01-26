@@ -1,8 +1,10 @@
 const express = require('express');
+const fs = require('fs').promises; // Promise 기반 fs 모듈 사용
 const app = express();
 const PORT = 3001;
 
 const cors = require('cors');
+const filePath = path.join(__dirname, './data/userlist.json');
 
 app.use(cors({
   origin: 'http://localhost:3000',
@@ -12,24 +14,9 @@ app.use(cors({
 app.use(express.json());
 
 // data (test_user, cart items)
-// 테스트용 유저
-let users = [
-  {
-    userId: 1,
-    name: 'test_user1',
-    email: 'test1@test.com',
-    password: '1234'
-  },
-  {
-    userId: 2,
-    name: 'test_user2',
-    email: 'test2@test.com',
-    password: 'test1234'
-  }
-];
 
 // 장바구니 데이터
-let carts = {
+let test_carts = {
   1: [
     {
       itemId: 1,
@@ -62,7 +49,6 @@ let carts = {
   ]
 };
 
-
 app.get('/', (req, res) => {
   res.send('Hello Express!');
 });
@@ -71,13 +57,63 @@ app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
 
-// 회원가입 API는 테스트용 유저로 생략
+// 회원가입 API
+app.post('/api/register', async (req, res) => {
+  const { userId, name, email, password } = req.body;
+  let users = [];
+  
+  // 필수 값이 누락된 경우
+  if (!userId || !name || !email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: '필수 값이 누락되었습니다.' 
+    });
+  }
+
+  try {
+    const fileData = fs.writeFile(filePath, 'utf8');
+    
+    // 유저 찾기
+    users = JSON.parse(fileData);
+    const user = users.find(u => u.email === email && u.password === password);
+
+    //유저가 있으면 '이미 등록된 사용자입니다' 오류
+    //HTTP code : 409 (Conflict)
+    if (user) {
+      return res.status(409).json({
+        success: false,
+        message: '이미 등록된 사용자입니다.'
+      });
+    }
+    users.push({ userId, name, email, password });
+    await fs.writeFile(filePath, JSON.stringify(users, null, 2), 'utf-8');
+
+    res.status(200).json({
+      success: true,
+      message: '사용자가 추가되었습니다.',
+    });
+
+  }
+
+    // Http 500: 서버 에러
+  catch (error) {
+    res.status(500).json({ 
+      success: false, 
+      message: '내부 오류로 회원 가입에 실패했습니다.' 
+    });
+  }
+});
+
 // 로그인 API
 app.post('/api/login', (req, res) => {
-  try {
-    const { email, password } = req.body;
+  let users = [];
 
+  try {
+    const fileData = fs.writeFile(filePath, 'utf8');
+    
     // 유저 찾기
+    users = JSON.parse(fileData);    
+    const { email, password } = req.body;
     const user = users.find(u => u.email === email && u.password === password);
 
     //Http 상태 401: 인증 실패

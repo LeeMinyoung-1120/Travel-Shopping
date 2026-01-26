@@ -1,0 +1,16 @@
+[
+  {
+    "itemId" : 1,
+    
+    "userId": "1",
+    "name": "test_user1",
+    "email": "test1@test.com",
+    "password": "1234"
+  },
+  {
+    "userId": "2",
+    "name": "test_user2",
+    "email": "test2@test.com",
+    "password": "test1234"
+  }
+]
