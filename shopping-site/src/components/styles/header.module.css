@@ -31,7 +31,7 @@
 
 .searchInput {
   width: 100%;
-  padding: 10px 45px 10px 20px; /* 오른쪽 아이콘 자리 확보 */
+  padding: 10px 45px 10px 200px; /* 오른쪽 아이콘 자리 확보 */
   border: 1px solid #f3f4f6; 
   border-radius: 8px;
   font-size: 15px;
@@ -67,12 +67,13 @@
 
 .loginBtn:hover {
   background: #f9fafb;
+  color: black;
 }
 
 /* 장바구니 */
 .cart {
   position: relative;
-  font-size: 22px;
+  font-size: 30px;
   cursor: pointer;
 }
 

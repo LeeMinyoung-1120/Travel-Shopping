@@ -1,28 +1,40 @@
 'use client';
 
-// travel_pick/components/HeroCarousel.jsx
-import { useState } from "react";
+import { useState } from 'react';
 
-export default function HeroCarousel() {
+interface Banner {
+  img: string;
+  title: string;
+  subtitle: string;
+}
+
+interface HeroCarouselProps {
+  banners?: Banner[]; // 외부에서 배너 배열을 받을 수 있음
+  height?: string; // 높이 조정
+}
+
+export default function HeroCarousel({
+  banners = [
+    {
+      img: '/2mg/main banner_1.jpg',
+      title: '당신의 여행 성향을 찾고',
+      subtitle: '완벽한 일정을 만들어보세요',
+    },
+    {
+      img: '/2mg/main banner_2.jpg',
+      title: 'MBTI 기반 맞춤 추천',
+      subtitle: '당신만의 특별한 여행을 시작하세요',
+    },
+  ],
+  height = 'h-[400px]',
+}: HeroCarouselProps) {
   const [current, setCurrent] = useState(0);
-  const banners = [
-    {
-      img: "/2mg/main banner_1.jpg",
-      title: "당신의 여행 성향을 찾고",
-      subtitle: "완벽한 일정을 만들어보세요",
-    },
-    {
-      img: "/2mg/main banner_2.jpg",
-      title: "MBTI 기반 맞춤 추천",
-      subtitle: "당신만의 특별한 여행을 시작하세요",
-    },
-  ];
 
   const next = () => setCurrent((current + 1) % banners.length);
   const prev = () => setCurrent((current - 1 + banners.length) % banners.length);
 
   return (
-    <div className="relative w-full h-[400px] overflow-hidden">
+    <div className={`relative w-full ${height} overflow-hidden`}>
       <img
         src={banners[current].img}
         alt={banners[current].title}

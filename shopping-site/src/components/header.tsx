@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import styles from './styles/header.module.css';
 // import { useCartStore } from '../hooks/useCart';
 
@@ -9,6 +10,7 @@ const Header: React.FC = () => {
   // const total = useCartStore((s) => s.getTotalCount());
   const total = 10;
   const badge: string | number = total >= 10 ? '10+' : total;
+  const router = useRouter();
 
   return (
     <header className={styles.header}>
@@ -29,8 +31,8 @@ const Header: React.FC = () => {
 
         {/* 우측 메뉴 */}
         <div className={styles.right}>
-          <button className={styles.loginBtn}>
-            로그인 & 회원가입
+          <button className={styles.loginBtn} onClick={() => router.push('/login')}>
+            로그인 및 회원가입
           </button>
 
           <Link href="/cart" className={styles.cart}>

@@ -23,6 +23,10 @@
   margin-bottom: 8px;
 }
 
+.logo img {
+  height: 80px;
+}
+
 .description {
   font-size: 14px;
   color: #6b7280;
@@ -44,7 +48,7 @@
 }
 
 .input {
-  width: 100%;
+  width: 95%;
   height: 44px;
   padding: 0 12px;
   font-size: 14px;
