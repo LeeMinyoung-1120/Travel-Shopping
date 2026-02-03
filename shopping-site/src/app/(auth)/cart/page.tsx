@@ -5,11 +5,45 @@ import { useCart } from '@/contexts/CartContext';
 import styles from '@/styles/Cart.module.css';
 
 export default function CartPage() {
-  const { items, removeItem, updateQuantity, total } = useCart();
+  const { items, removeItem, updateQuantity, total, fetchCartItems } = useCart();
+
+  // 테스트용 장바구니 추가 함수 (나중에 삭제 예정)
+  const handleTestAddCart = async () => {
+    // 로그인된 유저 정보 가져오기
+    const loginUser = JSON.parse(localStorage.getItem('loginUser') || '{}');
+    if (!loginUser.userId) return alert('로그인 필요!');
+    
+    // 장바구니에 테스트 상품 추가
+    const response = await fetch('http://localhost:3001/api/cart', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      // 테스트용 아이템 정보 + userId 포함
+      body: JSON.stringify({
+        userId: String(loginUser.userId), // 현재 로그인 중인 userId 전달
+        itemId: 2,
+        name: '지중해 마나도 스노클링',
+        price: 1720000,
+        quantity: 1,
+        imageUrl: '/2mg/manado.png',
+        option: '기본 옵션'
+      }),
+    });
+
+    // 추가 성공 시 장바구니 아이템 새로고침
+    const data = await response.json();
+    if (data.success) await fetchCartItems();
+  };
 
   return (
     <div className={styles.container}>
       <h2 className={styles.pageTitle}>예약하기</h2>
+
+      {/* 테스트 버튼, 삭제 예정 */}
+      <div style={{ marginBottom: '20px', textAlign: 'center' }}>
+        <button onClick={handleTestAddCart}>
+          테스트 상품
+        </button>
+      </div>
 
       {items.length === 0 ? (
         <p>장바구니가 비어 있습니다.</p>
