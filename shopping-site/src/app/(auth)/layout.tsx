@@ -2,6 +2,7 @@
 
 import Header from '@/components/header';
 import { CartProvider } from '@/contexts/CartContext';
+import { OrderProvider } from '@/contexts/OrderContext';
 
 export default function MainLayout({
   children,
@@ -10,8 +11,10 @@ export default function MainLayout({
 }) {
   return (
     <CartProvider>
-      <Header />
-      {children}
+      <OrderProvider>
+        <Header />
+        {children}
+      </OrderProvider>
     </CartProvider>
   );
 }

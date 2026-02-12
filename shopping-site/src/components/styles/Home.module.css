@@ -1,0 +1,41 @@
+.page {
+  background-color: #f9fafb; /* gray-50 */
+}
+
+/* 당신을 위한 여행 섹션 */
+.featureSection {
+  padding: 3rem 0; /* py-12 */
+  background-color: white;
+  text-align: center;
+}
+
+.sectionTitle {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.sectionSubtitle {
+  color: #6b7280; /* gray-500 */
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+/* 상세 카테고리 필터 섹션 */
+.filterSection {
+  padding: 1.5rem 0; /* py-6 */
+  background-color: white;
+  border-top: 1px solid #e5e7eb;
+}
+
+.filterContainer {
+  max-width: 72rem; /* max-w-6xl */
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.filterLabel {
+  color: #4b5563; /* gray-600 */
+  font-size: 1.3rem; /* text-sm */
+  margin-bottom: 0.75rem;
+}

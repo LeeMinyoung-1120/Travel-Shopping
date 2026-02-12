@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import styles from './styles/HeroCarousel.module.css';
 
 interface Banner {
   img: string;
@@ -9,16 +10,16 @@ interface Banner {
 }
 
 interface HeroCarouselProps {
-  banners?: Banner[]; // 외부에서 배너 배열을 받을 수 있음
-  height?: string; // 높이 조정
+  banners?: Banner[];
+  height?: number; // px 단위 높이
 }
 
 export default function HeroCarousel({
   banners = [
     {
       img: '/2mg/main banner_1.jpg',
-      title: '당신의 여행 성향을 찾고',
-      subtitle: '완벽한 일정을 만들어보세요',
+      title: '당신의 여행 성향을 찾고\n완벽한 일정을 만들어보세요',
+      subtitle: '당신의 MBTI 여행 유형을 분석하여 맞춤형 여행 상품을 추천합니다.\n검색하고, 계획하고, 에약하세요. 모든 것이 한 곳에서 가능합니다.',
     },
     {
       img: '/2mg/main banner_2.jpg',
@@ -26,38 +27,35 @@ export default function HeroCarousel({
       subtitle: '당신만의 특별한 여행을 시작하세요',
     },
   ],
-  height = 'h-[400px]',
+  height = 500,
 }: HeroCarouselProps) {
   const [current, setCurrent] = useState(0);
 
-  const next = () => setCurrent((current + 1) % banners.length);
-  const prev = () => setCurrent((current - 1 + banners.length) % banners.length);
+  const next = () => setCurrent((prev) => (prev + 1) % banners.length);
+  const prev = () =>
+    setCurrent((prev) => (prev - 1 + banners.length) % banners.length);
 
   return (
-    <div className={`relative w-full ${height} overflow-hidden`}>
+    <div
+      className={styles.container}
+      style={{ height: `${height}px` }}
+    >
       <img
         src={banners[current].img}
         alt={banners[current].title}
-        className="w-full h-full object-cover"
+        className={styles.image}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60 flex flex-col items-center justify-center text-white text-center px-4">
-        <h1 className="text-4xl font-bold mb-2">{banners[current].title}</h1>
-        <p className="text-xl mb-6">{banners[current].subtitle}</p>
-        <button className="bg-green-500 hover:bg-green-600 px-8 py-3 rounded-lg font-semibold text-lg transition">
-          더 알아보기
-        </button>
+
+      <div className={styles.overlay}>
+        <h1 className={styles.title}>{banners[current].title}</h1>
+        <p className={styles.subtitle}>{banners[current].subtitle}</p>
+        <button className={styles.cta}>더 알아보기</button>
       </div>
 
-      <button
-        onClick={prev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg"
-      >
+      <button className={`${styles.nav} ${styles.left}`} onClick={prev}>
         ◀
       </button>
-      <button
-        onClick={next}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg"
-      >
+      <button className={`${styles.nav} ${styles.right}`} onClick={next}>
         ▶
       </button>
     </div>

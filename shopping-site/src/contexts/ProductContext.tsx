@@ -2,14 +2,24 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
+interface ProductCardProps {
+  id: number | string;
+  title: string;
+  thumbnail: string;
+  price: number;
+  rating: number;
+  reviewCount: number;
+  tag?: string;
+}
+
 interface CartItem {
-  imageUrl: any;
   id: number;
   name: string;
   image: string;
   options: string;
   price: number;
   quantity: number;
+  imageUrl: string;
 }
 
 interface CartContextType {

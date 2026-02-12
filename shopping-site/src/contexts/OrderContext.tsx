@@ -7,6 +7,7 @@ export interface OrderItem {
   title: string;
   price: number;
   quantity: number;
+  imageUrl: string;
 }
 
 interface OrderContextType {
@@ -16,6 +17,7 @@ interface OrderContextType {
   clearOrder: () => void;
   isOrder: boolean;
   isSuccess: boolean;
+  setItems: React.Dispatch<React.SetStateAction<OrderItem[]>>;
 }
 
 const OrderContext = createContext<OrderContextType | null>(null);
@@ -28,6 +30,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
       title: "[출발확정] 2026 시드니 마라톤 5일",
       price: 1967000,
       quantity: 2,
+      imageUrl: './globe.svg'
     },
   ]);
 
@@ -64,6 +67,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     <OrderContext.Provider
       value={{
         items,
+        setItems,
         totalPrice,
         createOrder,
         clearOrder,
