@@ -2,24 +2,26 @@
 
 import React from 'react';
 import { useCart } from '@/contexts/CartContext';
+import { useOrder } from '@/contexts/OrderContext';
 import styles from '@/styles/Cart.module.css';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, total, fetchCartItems } = useCart();
+  const router = useRouter();
+  const { setItems: setOrderItems } = useOrder();
 
   // 테스트용 장바구니 추가 함수 (나중에 삭제 예정)
   const handleTestAddCart = async () => {
-    // 로그인된 유저 정보 가져오기
     const loginUser = JSON.parse(localStorage.getItem('loginUser') || '{}');
     if (!loginUser.userId) return alert('로그인 필요!');
     
-    // 장바구니에 테스트 상품 추가
     const response = await fetch('http://localhost:3001/api/cart', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      // 테스트용 아이템 정보 + userId 포함
       body: JSON.stringify({
-        userId: String(loginUser.userId), // 현재 로그인 중인 userId 전달
+        userId: String(loginUser.userId),
         itemId: 2,
         name: '지중해 마나도 스노클링',
         price: 1720000,
@@ -29,16 +31,31 @@ export default function CartPage() {
       }),
     });
 
-    // 추가 성공 시 장바구니 아이템 새로고침
     const data = await response.json();
     if (data.success) await fetchCartItems();
+  };
+
+  // 결제 버튼 클릭 시 Order 페이지로 이동
+  const handleCheckout = () => {
+    if (items.length === 0) return alert('장바구니가 비어 있습니다.');
+
+    // Cart의 아이템을 OrderContext에 변환 후 세팅
+    const orderItems = items.map(item => ({
+      id: String(item.id),
+      title: item.name,
+      price: item.price,
+      quantity: item.quantity,
+      imageUrl: item.imageUrl
+    }));
+
+    setOrderItems(orderItems);
+    router.push('/order');
   };
 
   return (
     <div className={styles.container}>
       <h2 className={styles.pageTitle}>예약하기</h2>
 
-      {/* 테스트 버튼, 삭제 예정 */}
       <div style={{ marginBottom: '20px', textAlign: 'center' }}>
         <button onClick={handleTestAddCart}>
           테스트 상품
@@ -52,40 +69,33 @@ export default function CartPage() {
           <div className={styles.productList}>
             {items.map(item => (
               <div key={item.id} className={styles.productCard}>
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className={styles.productImage}
-                />
-
+                <img src={item.imageUrl || '/2mg/manado.png'} alt={item.name} width={100} height={100} className={styles.productImage} />
                 <div className={styles.productInfo}>
                   <div className={styles.productTitle}>{item.name}</div>
                   <div className={styles.productSub}>옵션: {item.options}</div>
                   <div className={styles.productPrice}>
                     {item.price.toLocaleString()}원
                   </div>
-
-                <div className={styles.quantityTotalRow}>
-                  <div className={styles.quantityBox}>
-                    <button
-                      className={styles.quantityButton}
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                    >
-                      -
-                    </button>
-                    {item.quantity}명
-                    <button
-                      className={styles.quantityButton}
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    >
-                      +
-                    </button>
+                  <div className={styles.quantityTotalRow}>
+                    <div className={styles.quantityBox}>
+                      <button
+                        className={styles.quantityButton}
+                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      >
+                        -
+                      </button>
+                      {item.quantity}명
+                      <button
+                        className={styles.quantityButton}
+                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      >
+                        +
+                      </button>
+                    </div>
+                    <div className={styles.totalPrice}>
+                      총 합계 : {(item.price * item.quantity).toLocaleString()}원
+                    </div>
                   </div>
-
-                <div className={styles.totalPrice}>
-                  총 합계 : {(item.price * item.quantity).toLocaleString()}원
-                </div>
-                </div>
                   <button
                     className={styles.removeButton}
                     onClick={() => removeItem(item.id)}
@@ -102,12 +112,8 @@ export default function CartPage() {
 
             {items.map(item => (
               <div key={item.id} className={styles.paymentItem}>
-                <span>
-                  {item.name} ({item.options})
-                </span>
-                <span>
-                  {(item.price * item.quantity).toLocaleString()}원
-                </span>
+                <span>{item.name} ({item.options})</span>
+                <span>{(item.price * item.quantity).toLocaleString()}원</span>
               </div>
             ))}
 
@@ -116,11 +122,13 @@ export default function CartPage() {
               <span>{total.toLocaleString()}원</span>
             </div>
 
-            <button className={styles.payButton}>결제하기</button>
+            {/* 변경: handleCheckout 호출 */}
+            <button className={styles.payButton} onClick={handleCheckout}>
+              결제하기
+            </button>
           </div>
         </div>
       )}
     </div>
   );
 };
-

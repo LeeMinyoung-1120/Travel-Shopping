@@ -1,22 +1,23 @@
 'use client';
 
-// travel_pick/components/FilterChips.jsx
-import { useState } from "react";
+import { useState } from 'react';
+import styles from './styles/FilterChips.module.css';
+
+type Chip = '전체' | '나라별' | 'MBTI별' | '취향별' | '인원수별';
 
 export default function FilterChips() {
-  const [active, setActive] = useState("전체");
-  const chips = ["전체", "내륙", "MBTI", "액티비티", "미식투어"];
+  const [active, setActive] = useState<Chip>('전체');
+
+  const chips: Chip[] = ['전체', '나라별', 'MBTI별', '취향별', '인원수별'];
 
   return (
-    <div className="flex gap-2 flex-wrap">
+    <div className={styles.container}>
       {chips.map((chip) => (
         <button
           key={chip}
           onClick={() => setActive(chip)}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition ${
-            active === chip
-              ? "bg-green-500 text-white"
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+          className={`${styles.chip} ${
+            active === chip ? styles.active : styles.inactive
           }`}
         >
           {chip}

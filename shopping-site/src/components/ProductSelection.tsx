@@ -1,14 +1,28 @@
 'use client';
 
-// travel_pick/components/ProductSection.jsx
-import ProductCard from "./ProductCard";
+import styles from './ProductSection.module.css';
+import ProductCard from './ProductCard';
 
-export default function ProductSection({ title, items }) {
+interface ProductItem {
+  id: number | string;
+  [key: string]: any; // ProductCard로 그대로 전달
+}
+
+interface ProductSectionProps {
+  title: string;
+  items: ProductItem[];
+}
+
+export default function ProductSection({
+  title,
+  items,
+}: ProductSectionProps) {
   return (
-    <section className="py-10 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-6">{title}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <section className={styles.section}>
+      <div className={styles.container}>
+        <h2 className={styles.title}>{title}</h2>
+
+        <div className={styles.grid}>
           {items.map((item) => (
             <ProductCard key={item.id} {...item} />
           ))}

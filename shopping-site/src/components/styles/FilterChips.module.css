@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.chip {
+  padding: 1rem 2rem;
+  border-radius: 9000px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #22c55e; /* green-500 */
+  color: white;
+}
+
+.inactive {
+  background-color: white;
+  color: #374151; /* gray-700 */
+  border: 1px solid #e5e7eb;
+}
+
+.inactive:hover {
+  background-color: #e5e7eb; /* gray-200 */
+}

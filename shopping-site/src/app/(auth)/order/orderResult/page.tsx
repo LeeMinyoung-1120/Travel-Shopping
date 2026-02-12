@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useOrder } from "@/contexts/OrderContext";
-import styles from "../../styles/page.module.css";
+import styles from "@/styles/page.module.css";
 
 export default function OrderResultPage() {
   const { isSuccess, totalPrice, clearOrder } = useOrder();
