@@ -1,27 +1,24 @@
 'use client';
 
 import Link from 'next/link';
-import styles from './ProductCard.module.css';
+import styles from './styles/ProductCard.module.css';
+import { Product } from '@/contexts/ProductContext';
 
 interface ProductCardProps {
-  id: number | string;
-  title: string;
-  thumbnail: string;
-  price: number;
-  rating: number;
-  reviewCount: number;
-  tag?: string;
+  product: Product;
 }
 
-export default function ProductCard({
-  id,
-  title,
-  thumbnail,
-  price,
-  rating,
-  reviewCount,
-  tag,
-}: ProductCardProps) {
+export default function ProductCard({ product }: ProductCardProps) {
+  const {
+    id,
+    title,
+    thumbnail,
+    price,
+    rating,
+    reviewCount,
+    tag,
+  } = product;
+
   return (
     <Link href={`/products/${id}`} className={styles.card}>
       <div className={styles.imageWrapper}>
@@ -39,7 +36,9 @@ export default function ProductCard({
           <span className={styles.review}>({reviewCount})</span>
         </div>
 
-        <p className={styles.price}>{price.toLocaleString()}원</p>
+        <p className={styles.price}>
+          {price.toLocaleString()}원
+        </p>
       </div>
     </Link>
   );

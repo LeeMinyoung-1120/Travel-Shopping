@@ -1,22 +1,18 @@
 'use client';
 
-import styles from './ProductSection.module.css';
+import styles from './styles/ProductSelection.module.css';
 import ProductCard from './ProductCard';
+import { Product } from '@/contexts/ProductContext';
 
-interface ProductItem {
-  id: number | string;
-  [key: string]: any; // ProductCard로 그대로 전달
-}
-
-interface ProductSectionProps {
+interface ProductSelectionProps {
   title: string;
-  items: ProductItem[];
+  items: Product[];
 }
 
-export default function ProductSection({
+export default function ProductSelection({
   title,
   items,
-}: ProductSectionProps) {
+}: ProductSelectionProps) {
   return (
     <section className={styles.section}>
       <div className={styles.container}>
@@ -24,7 +20,7 @@ export default function ProductSection({
 
         <div className={styles.grid}>
           {items.map((item) => (
-            <ProductCard key={item.id} {...item} />
+            <ProductCard key={item.id} product={item} />
           ))}
         </div>
       </div>

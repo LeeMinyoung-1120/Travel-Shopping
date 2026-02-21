@@ -21,15 +21,5 @@
       "imageUrl": "/2mg/manado.png"
     }
   ],
-  "1769599246023": [
-    {
-      "itemId": 2,
-      "userId": "1769599246023",
-      "name": "지중해 마나도 스노클링",
-      "price": 1720000,
-      "option": "기본 옵션",
-      "quantity": 3,
-      "imageUrl": "/2mg/manado.png"
-    }
-  ]
+  "1769599246023": []
 }

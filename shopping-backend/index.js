@@ -6,6 +6,7 @@ const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/order');
+const productsRoutes = require('./routes/products');
 
 const app = express();
 const PORT = 3001;
@@ -21,6 +22,7 @@ app.use('/api/register', registerRoutes);   // 회원가입
 app.use('/api/login', loginRoutes);   // 로그인
 app.use('/api/cart', cartRoutes);   // 장바구니
 app.use('/api/order', orderRoutes); // 주문
+app.use('/api/products', productsRoutes); // 상품
 
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
 
