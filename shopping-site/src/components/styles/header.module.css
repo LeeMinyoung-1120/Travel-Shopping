@@ -31,7 +31,7 @@
 
 .searchInput {
   width: 100%;
-  padding: 10px 45px 10px 200px;
+  padding: 10px 45px 10px 12px;
   border: 1px solid #f3f4f6; 
   border-radius: 8px;
   font-size: 15px;
@@ -54,6 +54,22 @@
   right: 5%;
 }
 
+.navLinks {
+  display: flex;
+  gap: 2.5rem;
+  padding-right: 30px;
+}
+
+.navLink {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+  font-size: 20px;
+  padding-top: 10px;
+}
+
 .loginBtn {
   padding: 8px 14px;
   border: 1px solid #d1d5db;
@@ -68,6 +84,13 @@
 .loginBtn:hover {
   background: #f9fafb;
   color: black;
+}
+
+.profileImage {
+  width: 40px;
+  height: 40px;
+  padding-top: 6px;
+  padding-right: 10px;
 }
 
 /* 장바구니 */
